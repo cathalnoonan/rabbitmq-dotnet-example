@@ -1,0 +1,32 @@
+name: "Sanity Check"
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  sanity_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code.
+      - uses: actions/checkout@v3
+
+      # Configure dotnet.
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      
+      # Start docker compose.
+      - run: docker compose up -d
+
+      # Send a message to the queue.
+      - run: dotnet run --project ./producer/producer.csproj -- Test Message
+
+      # Read the message from the queue.
+      # Note: 'exit' is an arbitrary argument.
+      - run: dotnet run --project ./consumer/consumer.csproj -- exit
+
+      # Stop docker compose.
+      - run: docker compose down
