@@ -15,7 +15,7 @@ Demonstrates:
 ## Setup
 Before running the console apps, make sure the RabbitMQ service is running.
 
-The `docker-compose.yaml` file contains the required configuration to start the RabbitMQ service.
+The `docker-compose.yml` file contains the required configuration to start the RabbitMQ service.
 
 1. Make sure docker desktop and the docker service are running.
 2. Run `docker compose up` in a terminal.
